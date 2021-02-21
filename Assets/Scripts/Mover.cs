@@ -36,7 +36,6 @@ public class Mover : MonoBehaviour
         if (hasHit)
         {
             nav.destination = hit.point;
-            
         }
         
     }
