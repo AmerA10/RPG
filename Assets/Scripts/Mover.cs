@@ -8,6 +8,7 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     [SerializeField] Transform target;
     NavMeshAgent nav;
+    
 
     Ray lastRay;
     void Start()
@@ -24,7 +25,16 @@ public class Mover : MonoBehaviour
             MoveToCursor();
            
         }
+        UpdateAnimator();
        
+    }
+
+    private void UpdateAnimator()
+    {
+        Vector3 velocity = nav.velocity;
+        Vector3 localVelocity = transform.InverseTransformDirection(velocity); // transforms the vector from a world space to local space
+        float speed = localVelocity.z;
+        GetComponent<Animator>().SetFloat("forwardSpeed", speed);
     }
 
     private void MoveToCursor()
