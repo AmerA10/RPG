@@ -1,3 +1,4 @@
+using RPG.Combat;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,17 +9,32 @@ namespace RPG.Movement
     public class Mover : MonoBehaviour
     {
         NavMeshAgent nav;
-        Ray lastRay;
         void Start()
         {
             nav = GetComponent<NavMeshAgent>();
-
         }
 
         // Update is called once per frame
         void Update()
         {
             UpdateAnimator();
+        }
+
+        public void StartMoveAction(Vector3 destination)
+        {
+            GetComponent<Fighter>().Cancel();
+            MoveTo(destination);
+        }
+
+        public void MoveTo(Vector3 destinatio)
+        {
+            nav.isStopped = false;
+            nav.destination = destinatio;
+        }
+
+        public void Stop()
+        {
+            nav.isStopped = true;
         }
 
         private void UpdateAnimator()
@@ -29,10 +45,7 @@ namespace RPG.Movement
             GetComponent<Animator>().SetFloat("forwardSpeed", speed);
         }
 
-        public void MoveTo(Vector3 destinatio)
-        {
-            nav.destination = destinatio;
-        }
+       
     }
 
 }
