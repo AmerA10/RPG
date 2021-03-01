@@ -20,14 +20,16 @@ namespace RPG.Control {
             foreach(RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if(target == null)
+                if (!GetComponent<Fighter>().CanAttack(target))
                 {
-                    continue; //move on to the next iteration
+                    continue;
                 }
 
                 if(Input.GetMouseButtonDown(0))
-                {
-                    GetComponent<Fighter>().Attack(target);
+                {   
+
+                 GetComponent<Fighter>().Attack(target);
+
                 }
                 return true; //even if we are hovering its still true
 

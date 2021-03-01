@@ -31,6 +31,7 @@ namespace RPG.Combat
             if (isDead) return;
             isDead = true;
             GetComponent<Animator>().SetTrigger("die");
+            
         }
 
         // Start is called before the first frame update

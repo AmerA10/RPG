@@ -462,6 +462,11 @@ PrefabInstance:
       propertyPath: weaponRange
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2382826286819158100, guid: 314d7d6dd1561db488bfb630a6c3e79e,
+        type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6501120591436871041, guid: 314d7d6dd1561db488bfb630a6c3e79e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1191,7 +1196,7 @@ PrefabInstance:
     - target: {fileID: 2359380552172416564, guid: 5b578888f22ab6a4db605a4297b1efa5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.52
+      value: -2.37
       objectReference: {fileID: 0}
     - target: {fileID: 2359380552172416564, guid: 5b578888f22ab6a4db605a4297b1efa5,
         type: 3}
@@ -1201,7 +1206,7 @@ PrefabInstance:
     - target: {fileID: 2359380552172416564, guid: 5b578888f22ab6a4db605a4297b1efa5,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.72
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 2359380552172416564, guid: 5b578888f22ab6a4db605a4297b1efa5,
         type: 3}
@@ -1450,17 +1455,17 @@ PrefabInstance:
     - target: {fileID: 4756575588368567708, guid: d0ba01190053da64b91a51b24e799d07,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.7681904
+      value: -4.46
       objectReference: {fileID: 0}
     - target: {fileID: 4756575588368567708, guid: d0ba01190053da64b91a51b24e799d07,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.886723
+      value: 6.72
       objectReference: {fileID: 0}
     - target: {fileID: 4756575588368567708, guid: d0ba01190053da64b91a51b24e799d07,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.9525385
+      value: 4.69
       objectReference: {fileID: 0}
     - target: {fileID: 4756575588368567708, guid: d0ba01190053da64b91a51b24e799d07,
         type: 3}

@@ -28,29 +28,36 @@ namespace RPG.Combat
             if (!GetIsInRange())
             {
                 GetComponent<Mover>().MoveTo(target.transform.position);
-
             }
             else
             {
                 GetComponent<Mover>().Cancel(); //this cancel is used to stop moving for the range
-                if (timeSinceLastAttack >= timeBetweenAttacks)
-                {
-                    AttackBehaviour();
-                    timeSinceLastAttack = 0;
-                }
-            
+                AttackBehaviour();
             }
         }
 
         private void AttackBehaviour()
         {
             //This will trigger the Hit() Event 
-            GetComponent<Animator>().SetTrigger("attack"); //Trigger the attakc animation
+            transform.LookAt(target.transform);
+            if (timeSinceLastAttack >= timeBetweenAttacks)
+            {
+                TriggerAttack(); //Trigger the attakc animation
+                timeSinceLastAttack = 0;
+            }
         }
+
+        private void TriggerAttack()
+        {
+            GetComponent<Animator>().ResetTrigger("stopAttack");
+            GetComponent<Animator>().SetTrigger("attack");
+        }
+
         //Animation Event
         void Hit()
         {
             //probably have to do a null check
+            if(target == null) { return; }
             target.TakeDamage(weaponDamage);
         }
 
@@ -65,14 +72,20 @@ namespace RPG.Combat
             target = combatTarget.GetComponent<Health>();
         }
 
+        public bool CanAttack(CombatTarget target)
+        {
+            if (target == null) { return false; }
+            Health targetToTest = target.GetComponent<Health>();
+            return targetToTest != null && !targetToTest.IsDead();
+        }
+
         public void Cancel()
         {
-            target = null;
+            
+            GetComponent<Animator>().ResetTrigger("attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
+            target = null;
         }
-      
-
     }
-
 }
 
