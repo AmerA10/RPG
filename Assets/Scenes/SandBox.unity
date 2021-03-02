@@ -457,16 +457,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2382826286819158100, guid: 314d7d6dd1561db488bfb630a6c3e79e,
-        type: 3}
-      propertyPath: weaponRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2382826286819158100, guid: 314d7d6dd1561db488bfb630a6c3e79e,
-        type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 6501120591436871041, guid: 314d7d6dd1561db488bfb630a6c3e79e,
         type: 3}
       propertyPath: m_RootOrder
@@ -1248,11 +1238,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'Enemy '
       objectReference: {fileID: 0}
-    - target: {fileID: 6599978272404042721, guid: 5b578888f22ab6a4db605a4297b1efa5,
-        type: 3}
-      propertyPath: weaponRange
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b578888f22ab6a4db605a4297b1efa5, type: 3}
 --- !u!1001 &1346801161
@@ -1321,11 +1306,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy  (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6599978272404042721, guid: 5b578888f22ab6a4db605a4297b1efa5,
-        type: 3}
-      propertyPath: weaponRange
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b578888f22ab6a4db605a4297b1efa5, type: 3}

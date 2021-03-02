@@ -80,9 +80,24 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: weaponRange
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646935, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5011423255428646935, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
@@ -93,17 +108,17 @@ PrefabInstance:
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1.9202485
       objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.0045781136
       objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.43984294
       objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
