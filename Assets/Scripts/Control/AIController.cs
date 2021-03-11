@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Combat;
+using RPG.Core;
 namespace RPG.Control
 {
     public class AIController : MonoBehaviour
@@ -10,14 +11,20 @@ namespace RPG.Control
         // Start is called before the first frame update
         GameObject player;
         Fighter fighter;
+        Health health;
         void Start()
         {
             player = GameObject.FindWithTag("Player");
             fighter = GetComponent<Fighter>();
+            health = GetComponent<Health>();
         }
         // Update is called once per frame
         void Update()
         {
+            if(health.IsDead())
+            {
+                return;
+            }
             
             if (InAttackRange() && fighter.CanAttack(player))
             {
