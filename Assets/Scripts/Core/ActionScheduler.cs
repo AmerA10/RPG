@@ -19,9 +19,10 @@ namespace RPG.Core
             {
                 Debug.Log("Cancelling: " + currentAction);
                 currentAction.Cancel();
-            } 
+            }
+            
             currentAction = action;
-           
+            
         }
 
         public void CancelCurrentAction()

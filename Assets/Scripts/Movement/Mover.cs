@@ -29,10 +29,10 @@ namespace RPG.Movement
             MoveTo(destination);
         }
 
-        public void MoveTo(Vector3 destinatio)
+        public void MoveTo(Vector3 destination)
         {
             nav.isStopped = false;
-            nav.destination = destinatio;
+            nav.destination = destination;
         }
 
         public void Cancel()

@@ -27,6 +27,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chaseDistance: 5
+  suspicionTime: 6
 --- !u!114 &7206280228139505745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ PrefabInstance:
     - target: {fileID: 5011423255428646935, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_Name
-      value: 'Enemy '
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
@@ -135,7 +136,7 @@ PrefabInstance:
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.25
+      value: 2.71
       objectReference: {fileID: 0}
     - target: {fileID: 5011423255428646939, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
@@ -175,7 +176,7 @@ PrefabInstance:
     - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: health
-      value: 20
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6030949366813787737, guid: d9824e7cf46a46d4ead682980e02164a, type: 3}
