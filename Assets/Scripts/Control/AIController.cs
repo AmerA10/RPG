@@ -15,6 +15,10 @@ namespace RPG.Control
         [SerializeField] PatrolPath patrolPath; //the patrol path, can be null
         [SerializeField] float waypointTolerance = 1f;
         [SerializeField] float waypointDwelTime = 2f;
+        [Range(0,1)]
+        [SerializeField] float patrolSpeedFraction = 0.2f; //.2 of what max speed is
+        //just try to connect the speed to the nav mesh speed
+        //speeds will be managed based on the state of the character
         // Start is called before the first frame update
         GameObject player;
         Fighter fighter;
@@ -84,7 +88,7 @@ namespace RPG.Control
             }
             if(timeSinceLastWayPoint > waypointDwelTime)
             {
-                mover.StartMoveAction(nexPositioon);
+                mover.StartMoveAction(nexPositioon, patrolSpeedFraction);
                 
             }
             
