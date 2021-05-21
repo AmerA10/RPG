@@ -18,6 +18,10 @@ namespace RPG.SceneManagement {
         [SerializeField] int sceneToLoad = -1;
         [SerializeField] Transform spawnPoint;
         [SerializeField] DesitnationIdentified destination;
+        [SerializeField] float fadeOutTime = 4f;
+        [SerializeField] float fadeInTime = 1f;
+        [SerializeField] float waitTime = 0.5f;
+        
         private void OnTriggerEnter(Collider other)
         {
             if(other.transform.tag.Equals("Player"))
@@ -27,22 +31,32 @@ namespace RPG.SceneManagement {
         }
         //transition to new scene , load scene
         private IEnumerator Transition()
-        {
-            if(sceneToLoad < 0)
+        {      
+            if (sceneToLoad < 0)
             {
                 Debug.LogError("Scene to load not set");
                 //yield break breaks the coroutine and stops it
                 yield break;
             }
+            Fader fader = FindObjectOfType<Fader>();
+
             DontDestroyOnLoad(gameObject); //works only on root of scene, not child of another game object
+
+            yield return fader.FadeOut(fadeOutTime);
+            Debug.Log("Loading Scene");
+
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            Debug.Log("Scene Loaded");
+      
+        
 
             //get hold of the other portal in the loaded level
-
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
 
-            Debug.Log("Scene Loaded");
+            yield return new WaitForSeconds(waitTime); // wait for things to stablized
+            yield return fader.FadeIn(fadeInTime);
+
             Destroy(gameObject); //destry gameobject after scene is loaded
         }
 
@@ -54,11 +68,6 @@ namespace RPG.SceneManagement {
                 if (portal == this) continue; //just move on
                 if (portal.destination == this.destination) return portal;
                 else continue;
-
-
-
-
-
 
             }
             return null;

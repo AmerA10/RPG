@@ -25,7 +25,7 @@ namespace RPG.Control {
             }
             if (InteractWithCombat()) return; //if we dont hit an enemy then just move on to the next method
             if(InteractWithMovement()) return;
-            Debug.Log("nothing to do");
+        
         }
 
         private bool InteractWithCombat()
