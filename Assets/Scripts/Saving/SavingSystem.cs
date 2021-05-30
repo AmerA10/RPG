@@ -14,15 +14,14 @@ namespace RPG.Saving {
         //fundamentally it is all the same as the two serilaize and deserialization methods
 
 
-        private void Start()
-        {
-            Debug.Log("SavePath: " + Application.persistentDataPath);
-            Debug.Log("Debug on: " +gameObject.name, gameObject);
-        }
+
         public void Save(string saveFile)
         {
+           
 
-            SaveFile(saveFile, CaptureState()); 
+            Dictionary<string, object> state  = LoadFile(saveFile);
+            CaptureState(state);
+            SaveFile(saveFile, state); 
 
         }
 
@@ -35,19 +34,24 @@ namespace RPG.Saving {
 
         private Dictionary<string, object> LoadFile(string saveFile)
         {
+            
             string path = GetPathFromSaveFile(saveFile);
-
+            if (!File.Exists(path))
+            {
+                return new Dictionary<string, object>();
+            }
             //creates an automatically closing stream when exiting the using statement
             using (FileStream stream = File.Open(path, FileMode.Open)) 
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                return (Dictionary<string, object>) formatter.Deserialize(stream);
+                return (Dictionary<string, object>)formatter.Deserialize(stream);
 
             }
         }
 
         private void SaveFile(string saveFile, object state)
         {
+           
             string path = GetPathFromSaveFile(saveFile);
 
             //creates an automic close when exiting the using statement
@@ -58,15 +62,15 @@ namespace RPG.Saving {
             };
         }
 
-        private Dictionary<string, object> CaptureState()
+        private void CaptureState(Dictionary<string, object> state)
         {
             //the string will be the unique identifier
-            Dictionary<string, object> state = new Dictionary<string, object>();
+           
             foreach(SaveableEntity saveable in FindObjectsOfType<SaveableEntity>()) //gets everysingle object with a 'SaveableEntity' script on it
             {
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
-            return state;
+           
         }
         private void RestoreState(Dictionary<string, object> state)
         {
@@ -76,11 +80,16 @@ namespace RPG.Saving {
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>()) //gets everysingle object with a 'SaveableEntity' script on it
             {
                 checker++;
-                saveable.RestoreState(stateDict[saveable.GetUniqueIdentifier()]);
+                string id = saveable.GetUniqueIdentifier();
+                if(stateDict.ContainsKey(id))
+                {
+                    saveable.RestoreState(stateDict[id]);
+                }
+            
             }
             if(numberOfStates == checker)
             {
-                Debug.Log("Number of cheks is correct");
+                Debug.Log("Number of check is correct");
             }
         }
 
