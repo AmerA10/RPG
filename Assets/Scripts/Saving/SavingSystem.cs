@@ -21,39 +21,44 @@ namespace RPG.Saving {
         }
         public void Save(string saveFile)
         {
-            string path = GetPathFromSaveFile(saveFile);
-            using (FileStream stream = File.Open(path, FileMode.Create)) //creates an automic close when exiting the using statement
-            {
-   
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, CaptureState());
 
-            };
-    
-         
+            SaveFile(saveFile, CaptureState()); 
+
         }
 
        
 
         public void Load(string saveFile)
         {
-            string path = GetPathFromSaveFile(saveFile);     
-            using (FileStream stream = File.Open(path, FileMode.Open)) //creates an automatically closing stream when exiting the using statement
-            {
-            
-     
-                BinaryFormatter formatter = new BinaryFormatter();
-                RestoreState(formatter.Deserialize(stream));
+            RestoreState(LoadFile(saveFile));
+        }
 
-          
-                
-                //maybe change the target of the player to nothings
+        private Dictionary<string, object> LoadFile(string saveFile)
+        {
+            string path = GetPathFromSaveFile(saveFile);
+
+            //creates an automatically closing stream when exiting the using statement
+            using (FileStream stream = File.Open(path, FileMode.Open)) 
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                return (Dictionary<string, object>) formatter.Deserialize(stream);
+
+            }
+        }
+
+        private void SaveFile(string saveFile, object state)
+        {
+            string path = GetPathFromSaveFile(saveFile);
+
+            //creates an automic close when exiting the using statement
+            using (FileStream stream = File.Open(path, FileMode.Create)) 
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, state);
             };
         }
 
-        
-
-        private object CaptureState()
+        private Dictionary<string, object> CaptureState()
         {
             //the string will be the unique identifier
             Dictionary<string, object> state = new Dictionary<string, object>();
@@ -63,9 +68,9 @@ namespace RPG.Saving {
             }
             return state;
         }
-        private void RestoreState(object state)
+        private void RestoreState(Dictionary<string, object> state)
         {
-            Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
+            Dictionary<string, object> stateDict = state;
             int numberOfStates = stateDict.Count;
             int checker = 0;
             foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>()) //gets everysingle object with a 'SaveableEntity' script on it

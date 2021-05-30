@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System;
-
+using UnityEngine.AI;
+using RPG.Core;
 
 
 namespace RPG.Saving
@@ -15,15 +16,23 @@ namespace RPG.Saving
         {
             return uniqueIdentifier;
         }
+        //we are returning object because it is the root of all, does not matter what type as long as it is a serializable
+        //basically means you can return anything
         public object CaptureState()
         {
-            Debug.Log("Capturing state for: " + GetUniqueIdentifier());
-            return null;
+            return new SerializableVector3(transform.position);
         }
 
         public void RestoreState(object state)
         {
-            Debug.Log("Restoring state for: " + GetUniqueIdentifier());
+            SerializableVector3 position = (SerializableVector3)state;
+            //probably should reset targets
+            //cancel current actions
+            this.GetComponent<NavMeshAgent>().enabled = false; //this simple just avoids some issues with the nav mesh agent
+            this.GetComponent<NavMeshAgent>().enabled = true;
+            this.GetComponent<ActionScheduler>().CancelCurrentAction();
+            transform.position = position.getVector();
+            
         }
 #if UNITY_EDITOR
         private void Update()
