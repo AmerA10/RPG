@@ -25,9 +25,17 @@ namespace RPG.Saving
         {
             Debug.Log("Restoring state for: " + GetUniqueIdentifier());
         }
-
+#if UNITY_EDITOR
         private void Update()
         {
+            /*
+             * Quick Side Note
+             * Since this code is only available in the unity editor
+             * Afterall serialized objects only exists for the UNity editor
+             * packaging the game will give an error as SerializedObject does not exist
+             * In order to avoid this
+             * Wrap the entire private void Update with a #if UNITY_EDITOR and then at the end add a #end if
+             */
        
             if (Application.IsPlaying(gameObject)) return ;
             //prefabs do not have a path therefore it is possible to have no modifiers
@@ -48,4 +56,5 @@ namespace RPG.Saving
 
 
     }
+#endif
 }
