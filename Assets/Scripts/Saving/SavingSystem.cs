@@ -17,36 +17,79 @@ namespace RPG.Saving {
         private void Start()
         {
             Debug.Log("SavePath: " + Application.persistentDataPath);
+            Debug.Log("Debug on: " +gameObject.name, gameObject);
         }
         public void Save(string saveFile)
         {
             string path = GetPathFromSaveFile(saveFile);
             using (FileStream stream = File.Open(path, FileMode.Create)) //creates an automic close when exiting the using statement
             {
-                Transform playerTransform = GetPlayerTransform();
-         
+   
                 BinaryFormatter formatter = new BinaryFormatter();
-                SerializableVector3 position = new SerializableVector3(playerTransform.position);
-                formatter.Serialize(stream, position);
-
+                formatter.Serialize(stream, CaptureState());
 
             };
     
          
         }
+
+       
+
         public void Load(string saveFile)
         {
             string path = GetPathFromSaveFile(saveFile);     
             using (FileStream stream = File.Open(path, FileMode.Open)) //creates an automatically closing stream when exiting the using statement
             {
-                Transform playerTransform = GetPlayerTransform();
-                byte[] buffer = new byte[stream.Length];
-                stream.Read(buffer, 0, buffer.Length);
-                playerTransform.position = DeserializeVector(buffer);
+            
+     
+                BinaryFormatter formatter = new BinaryFormatter();
+                RestoreState(formatter.Deserialize(stream));
+
+          
                 
-                //maybe change the target of the player to nothing
+                //maybe change the target of the player to nothings
             };
         }
+
+        
+
+        private object CaptureState()
+        {
+            //the string will be the unique identifier
+            Dictionary<string, object> state = new Dictionary<string, object>();
+            foreach(SaveableEntity saveable in FindObjectsOfType<SaveableEntity>()) //gets everysingle object with a 'SaveableEntity' script on it
+            {
+                state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
+            }
+            return state;
+        }
+        private void RestoreState(object state)
+        {
+            Dictionary<string, object> stateDict = (Dictionary<string, object>)state;
+            int numberOfStates = stateDict.Count;
+            int checker = 0;
+            foreach (SaveableEntity saveable in FindObjectsOfType<SaveableEntity>()) //gets everysingle object with a 'SaveableEntity' script on it
+            {
+                checker++;
+                saveable.RestoreState(stateDict[saveable.GetUniqueIdentifier()]);
+            }
+            if(numberOfStates == checker)
+            {
+                Debug.Log("Number of cheks is correct");
+            }
+        }
+
+        private string GetPathFromSaveFile(string saveFile)
+        {
+
+            //combines strings into a path
+            //returns the save file path
+            return Path.Combine(Application.persistentDataPath, saveFile + ".sav");
+        }
+
+
+        //this is dead code
+        //however, it is the bases for how serialization and deserialization works so I will keep it 
 
         private byte[] SerializeVector (Vector3 vector)
         {
@@ -70,18 +113,9 @@ namespace RPG.Saving {
             return vector;
         }
 
-        private string GetPathFromSaveFile(string saveFile)
-        {
-            
-            //combines strings into a path
-            //returns the save file path
-            return Path.Combine(Application.persistentDataPath , saveFile + ".sav");
-        }
+      
+
         
-        private Transform GetPlayerTransform()
-        {
-            return GameObject.FindGameObjectWithTag("Player").transform;
-        }
 
     }
 }

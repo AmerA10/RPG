@@ -6,7 +6,7 @@ namespace RPG.Saving
     public class SerializableVector3
     {
 
-        float x, y, z;
+         float x, y, z;
 
 
         public SerializableVector3(Vector3 vector)
@@ -14,6 +14,11 @@ namespace RPG.Saving
             x = vector.x;
             y = vector.y;
             z = vector.z;
+        }
+
+        public Vector3 getVector()
+        {
+            return new Vector3(x, y, z);
         }
     }
 
