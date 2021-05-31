@@ -98,6 +98,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3734628756139120652, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: uniqueIdentifier
+      value: player
+      objectReference: {fileID: 0}
     - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: weaponRange

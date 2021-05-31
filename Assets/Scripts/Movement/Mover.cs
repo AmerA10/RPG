@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using RPG.Core;
+using RPG.Saving;
 
 namespace RPG.Movement
 {
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, ISaveable
     {
         NavMeshAgent nav;
         Health health;
@@ -38,12 +39,7 @@ namespace RPG.Movement
             nav.destination = destination;
         }
 
-        public void Cancel()
-        {
-            nav.isStopped = true;
-        }
-
-  
+        
 
         private void UpdateAnimator()
         {
@@ -53,7 +49,28 @@ namespace RPG.Movement
             GetComponent<Animator>().SetFloat("forwardSpeed", speed);
         }
 
-       
+        //IAction Interface
+        public void Cancel()
+        {
+            nav.isStopped = true;
+        }
+
+        //ISaveable interface
+        public object CaptureState()
+        {
+            return new SerializableVector3(transform.position);
+        }
+
+        public void RestoreState(object state)
+        {
+            SerializableVector3 position = (SerializableVector3)state;
+            //probably should reset targets
+            //cancel current actions
+            this.GetComponent<NavMeshAgent>().enabled = false; //this simple just avoids some issues with the nav mesh agent
+            this.GetComponent<NavMeshAgent>().enabled = true;
+            this.GetComponent<ActionScheduler>().CancelCurrentAction();
+            transform.position = position.getVector(); 
+        }
     }
 
 }

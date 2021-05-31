@@ -12,21 +12,31 @@ namespace RPG.Saving
         // Start is called before the first frame update
         void Start()
         {
-
+            Load();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if(Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                GetComponent<SavingSystem>().Save(defaultSaveFile);
+                Save();
             }
-            if(Input.GetKeyDown(KeyCode.L))
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                GetComponent<SavingSystem>().Load(defaultSaveFile);
+                Load();
             }
-   
+
+        }
+
+        public void Load()
+        {
+            GetComponent<SavingSystem>().Load(defaultSaveFile);
+        }
+
+        public void Save()
+        {
+            GetComponent<SavingSystem>().Save(defaultSaveFile);
         }
     }
 

@@ -4,15 +4,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using RPG.Control;
 using UnityEngine.AI;
+using RPG.Saving;
 
-namespace RPG.SceneManagement {
+namespace RPG.SceneManagement
+{
 
     public class Portal : MonoBehaviour
     {
-        
+
+        private void Start()
+        {
+           
+        }
+
         enum DesitnationIdentified
         {
-            A,B,C,D,E
+            A, B, C, D, E
         }
 
         [SerializeField] int sceneToLoad = -1;
@@ -20,18 +27,21 @@ namespace RPG.SceneManagement {
         [SerializeField] DesitnationIdentified destination;
         [SerializeField] float fadeOutTime = 4f;
         [SerializeField] float fadeInTime = 1f;
-        [SerializeField] float waitTime = 0.5f;
-        
+        [SerializeField] float waitTime = 2f;
+
+     
+
         private void OnTriggerEnter(Collider other)
         {
-            if(other.transform.tag.Equals("Player"))
+            if (other.transform.tag.Equals("Player"))
             {
                 StartCoroutine(Transition());
+               
             }
         }
         //transition to new scene , load scene
         private IEnumerator Transition()
-        {      
+        {
             if (sceneToLoad < 0)
             {
                 Debug.LogError("Scene to load not set");
@@ -39,22 +49,29 @@ namespace RPG.SceneManagement {
                 yield break;
             }
             Fader fader = FindObjectOfType<Fader>();
+            SavingWrapper saver = FindObjectOfType<SavingWrapper>();
 
             DontDestroyOnLoad(gameObject); //works only on root of scene, not child of another game object
 
             yield return fader.FadeOut(fadeOutTime);
-            Debug.Log("Loading Scene");
+       
+
+            saver.Save();
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
-            Debug.Log("Scene Loaded");
-      
-        
+            saver.Load();
+            
+     
+
+
 
             //get hold of the other portal in the loaded level
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
 
+        
             yield return new WaitForSeconds(waitTime); // wait for things to stablized
+            
             yield return fader.FadeIn(fadeInTime);
 
             Destroy(gameObject); //destry gameobject after scene is loaded
@@ -64,7 +81,8 @@ namespace RPG.SceneManagement {
         {
             //grabs the portal in the loaded scene that has the same enum destination as the current
             Portal[] otherPortal = FindObjectsOfType<Portal>();
-            foreach(Portal portal in otherPortal) {
+            foreach (Portal portal in otherPortal)
+            {
                 if (portal == this) continue; //just move on
                 if (portal.destination == this.destination) return portal;
                 else continue;
@@ -81,11 +99,13 @@ namespace RPG.SceneManagement {
             //rotation does not conflict
             //there will be another solution later on
 
-            GameObject player =  GameObject.FindWithTag("Player");
+            GameObject player = GameObject.FindWithTag("Player");
+            player.GetComponent<NavMeshAgent>().enabled = false; //this simple just avoids some issues with the nav mesh agent
+          
             player.GetComponent<NavMeshAgent>().Warp(otherPortal.spawnPoint.position);
             player.transform.rotation = otherPortal.spawnPoint.rotation;
-           
-            
+            player.GetComponent<NavMeshAgent>().enabled = true;
+
         }
     }
 
