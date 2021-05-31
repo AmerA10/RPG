@@ -10,9 +10,9 @@ namespace RPG.Saving
 
 
         // Start is called before the first frame update
-        void Start()
+        private IEnumerator Start()
         {
-            Load();
+            yield return (GetComponent<SavingSystem>().LoadLastScene(defaultSaveFile));
         }
 
         // Update is called once per frame

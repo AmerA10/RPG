@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 namespace RPG.Saving
 {
@@ -13,6 +14,28 @@ namespace RPG.Saving
         //there are better and more automatic ways of optomizing this type of saving system.
         //c# has a built in system for serialization
         //fundamentally it is all the same as the two serilaize and deserialization methods
+
+
+        public IEnumerator LoadLastScene(string saveFile)
+        {
+            // 1. Get the state 2. Load the last scene 3. Restore the state of that scene
+            Dictionary<string, object> state = LoadFile(saveFile);
+            if(state.ContainsKey("LastSceneBuildIndex"))
+            {
+                if (state["LastSceneBuildIndex"] != null)
+                {
+                    int lastSceneIndex = (int)state["LastSceneBuildIndex"];
+                    if (lastSceneIndex != SceneManager.GetActiveScene().buildIndex)
+                    {
+                        yield return SceneManager.LoadSceneAsync(lastSceneIndex);
+                    }
+
+                    RestoreState(state);
+                }
+            }
+            
+            
+        }
 
         public void Save(string saveFile)
         {
@@ -68,6 +91,8 @@ namespace RPG.Saving
             {
                 state[saveable.GetUniqueIdentifier()] = saveable.CaptureState();
             }
+
+            state["LastSceneBuildIndex"] = SceneManager.GetActiveScene().buildIndex;
 
         }
         private void RestoreState(Dictionary<string, object> state)
