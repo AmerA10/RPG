@@ -63,7 +63,7 @@ namespace RPG.Movement
 
         public void RestoreState(object state)
         {
-            SerializableVector3 position = (SerializableVector3)state;
+            SerializableVector3 position = (SerializableVector3) state;
             //probably should reset targets
             //cancel current actions
             this.GetComponent<NavMeshAgent>().enabled = false; //this simple just avoids some issues with the nav mesh agent
