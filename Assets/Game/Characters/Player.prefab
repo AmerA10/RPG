@@ -111,6 +111,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 1ba91c014d246264ab12cd413cf44621,
+        type: 2}
+    - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
       propertyPath: weaponRange
       value: 1
       objectReference: {fileID: 0}

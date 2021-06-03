@@ -8,14 +8,13 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] float weaponRange = 2f;
+        
         [SerializeField] float timeBetweenAttacks = 1f;
-        [SerializeField] float weaponDamage = 5f;
+        [SerializeField] Weapon defaultWeapon = null;
+        
 
-        //-- Weapon Stuff
-        [SerializeField] GameObject weaponPrefab = null;
         [SerializeField] Transform handTransform = null;
-        [SerializeField] AnimatorOverrideController weaponOverride = null;
+        [SerializeField] Weapon currentWeapon = null;
 
 
         Health target;
@@ -24,7 +23,7 @@ namespace RPG.Combat
 
         private void Start()
         {
-            SpawnWeapon(weaponPrefab);
+            EquipWeapon(defaultWeapon);
         }
 
         private void Update()
@@ -72,12 +71,12 @@ namespace RPG.Combat
         {
             //probably have to do a null check
             if(target == null) { return; }
-            target.TakeDamage(weaponDamage);
+            target.TakeDamage(currentWeapon.GetDamage());
         }
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, target.transform.position) < weaponRange;
+            return Vector3.Distance(transform.position, target.transform.position) < currentWeapon.GetRange();
         }
 
         public void Attack(GameObject combatTarget)
@@ -103,16 +102,13 @@ namespace RPG.Combat
         }
 
 
-        public void SpawnWeapon(GameObject weapon)
+        public void EquipWeapon(Weapon weapon)
         {
-            if(weapon != null)
-            {
-                Debug.Log("changing weapons");
-                GameObject spawnedWeapon = Instantiate(weapon, handTransform);
-                Animator anim = GetComponent<Animator>();
-                anim.runtimeAnimatorController = weaponOverride;
-            }
-           
+            Debug.Log("changing weapons");
+            currentWeapon = weapon; 
+            Animator anim = GetComponent<Animator>();
+            weapon.Spawn(this.handTransform, anim);
+
         }
     }
 }
