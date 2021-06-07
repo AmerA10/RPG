@@ -4220,6 +4220,12 @@ PrefabInstance:
       propertyPath: uniqueIdentifier
       value: 186321be-2890-40ea-8e41-8764e7f75d05
       objectReference: {fileID: 0}
+    - target: {fileID: 6599978272404042721, guid: 5b578888f22ab6a4db605a4297b1efa5,
+        type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 0f30d0c8f5643d54393560d245b6ceca,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b578888f22ab6a4db605a4297b1efa5, type: 3}
 --- !u!1001 &1346801161
@@ -5792,6 +5798,51 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Core
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781157305443, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -38.966442
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781157305443, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.6100078
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781157305443, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.9823306
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781251833139, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -38.966442
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781251833139, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.6100078
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781251833139, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.9823306
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781456973446, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LookaheadTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781456973446, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_CameraDistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2233753781456973447, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_LookaheadTime
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 4606791922971598901, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}

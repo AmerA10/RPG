@@ -112,7 +112,7 @@ namespace RPG.Control
 
         private void SuspicionBehaviour()
         {
-            Debug.Log("Sus");
+            
             GetComponent<ActionScheduler>().CancelCurrentAction();
         }
 

@@ -70,9 +70,25 @@ namespace RPG.Combat
         //Animation Event
         void Hit()
         {
+
+            if (target == null) { return; }
+            if (currentWeapon.HasProjectile())
+            {
+                currentWeapon.LaunchProjectile(this.rightHandTransform, this.leftHandTransform, target);
+            }
+            else
+            {
+                
+                target.TakeDamage(currentWeapon.GetDamage());
+            }
             //probably have to do a null check
-            if(target == null) { return; }
-            target.TakeDamage(currentWeapon.GetDamage());
+            
+        }
+
+        //bow animation Event
+        void Shoot()
+        {
+            Hit();
         }
 
         private bool GetIsInRange()
