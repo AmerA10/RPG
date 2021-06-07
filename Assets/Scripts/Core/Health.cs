@@ -33,6 +33,10 @@ namespace RPG.Core
                 Die();
 
             }
+            else
+            {
+                GetComponent<Animator>().ResetTrigger("die");
+            }
         }
 
         private void Die()

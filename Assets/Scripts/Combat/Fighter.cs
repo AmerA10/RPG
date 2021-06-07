@@ -13,7 +13,8 @@ namespace RPG.Combat
         [SerializeField] Weapon defaultWeapon = null;
         
 
-        [SerializeField] Transform handTransform = null;
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
         [SerializeField] Weapon currentWeapon = null;
 
 
@@ -107,7 +108,7 @@ namespace RPG.Combat
             Debug.Log("changing weapons");
             currentWeapon = weapon; 
             Animator anim = GetComponent<Animator>();
-            weapon.Spawn(this.handTransform, anim);
+            weapon.Spawn(this.rightHandTransform, this.leftHandTransform, anim);
 
         }
     }
