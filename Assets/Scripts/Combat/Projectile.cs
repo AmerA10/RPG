@@ -7,20 +7,26 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     
     [SerializeField] float speed = 1f;
+    [SerializeField] bool isHoming = true;
 
     Health target = null;
     float damage = 0;
     void Start()
     {
-       
+        transform.LookAt(GetAimLocation());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (target == null) return;
-        transform.LookAt(GetAimLocation());
+        
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if(isHoming && !target.IsDead())
+        {
+            transform.LookAt(GetAimLocation());
+        }
+        
+        
     }
 
     public void SetTarget(Health target, float damage)
@@ -47,9 +53,14 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<Health>() != target) return;
+        if(target.IsDead())
+        {
+            return;
+            
+        }
+        target.TakeDamage(this.damage);
+        Destroy(this.gameObject);
 
-            target.TakeDamage(this.damage);
-            Destroy(this.gameObject);
 
     }
 }
