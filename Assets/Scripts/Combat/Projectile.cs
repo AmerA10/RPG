@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Core;
+
+namespace RPG.Combat
+{
+
 public class Projectile : MonoBehaviour
 {
     // Start is called before the first frame update
     
     [SerializeField] float speed = 1f;
     [SerializeField] bool isHoming = true;
+    [SerializeField] GameObject hitEffect = null;
+    [SerializeField] float maxLifeTime = 10f;
+    [SerializeField] GameObject[] destroyOnHit = null;
+    [SerializeField] float lifeAfterImpact = 2f;
 
     Health target = null;
     float damage = 0;
@@ -33,6 +41,8 @@ public class Projectile : MonoBehaviour
     {
         this.damage = damage;
         this.target = target;
+
+        Destroy(gameObject, maxLifeTime);
     }
 
     private Vector3 GetAimLocation()
@@ -58,9 +68,20 @@ public class Projectile : MonoBehaviour
             return;
             
         }
+        if(hitEffect != null)
+        {
+           GameObject spawnedHitEffect = Instantiate(hitEffect, GetAimLocation(), Quaternion.identity);
+        }
         target.TakeDamage(this.damage);
-        Destroy(this.gameObject);
+        speed = 0;
+        foreach(GameObject toDestroy in destroyOnHit)
+        {
+            Destroy(toDestroy);
+        }
+
+        Destroy(this.gameObject, lifeAfterImpact);
 
 
     }
+}
 }

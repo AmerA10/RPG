@@ -27,9 +27,23 @@ namespace RPG.Combat
                 weapon.name = weaponName;
 
             }
+            //this will be null if it is just the runtime animator controller not the animatorOverrideController
+            var overrideController = animator.runtimeAnimatorController as AnimatorOverrideController;
+
             if (animatorOverride != null)
             {
                 animator.runtimeAnimatorController = animatorOverride;
+            }
+            //if the weapon picked up doeos not contain an animatorOverride and the one picked 
+            //and the current player animator runTimeAnimatorController is an overrideController then 
+            //the animator runtimeAnimatorController should be the root of the overrideController, which then would be the default
+            //we dont want the animator to use ethe previous override controller, so
+            //if the player previous animator is an override, and the current override is null then revert to the root animator
+            else if (overrideController != null)
+                
+            {
+                animator.runtimeAnimatorController = overrideController.runtimeAnimatorController;
+                
             }
          
         }

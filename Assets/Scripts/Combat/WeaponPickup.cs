@@ -10,14 +10,33 @@ namespace RPG.Combat
         // Start is called before the first frame update
 
         [SerializeField] Weapon weapon = null;
-
+        [SerializeField] float respawnTime = 5f;
         private void OnTriggerEnter(Collider other)
         {
             if(other.CompareTag("Player"))
             {
                 Debug.Log("picking up weapon");
                 other.GetComponent<Fighter>().EquipWeapon(weapon);
-                Destroy(this.gameObject, 0.02f);
+                StartCoroutine(HideForSeconds(respawnTime));
+            }
+        }
+
+
+        private IEnumerator HideForSeconds(float seconds)
+        {
+            ShowPickup(false);
+            yield return new WaitForSeconds(seconds);
+            ShowPickup(true);
+        }
+
+       
+        private void ShowPickup(bool shouldShow)
+        {
+            GetComponent<SphereCollider>().enabled = shouldShow;
+            foreach (Transform child in transform)
+            {
+                child.gameObject.SetActive(shouldShow);
+
             }
         }
 
