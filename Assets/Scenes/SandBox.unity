@@ -6173,11 +6173,16 @@ PrefabInstance:
       propertyPath: m_LookaheadTime
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4014950081932734989, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: startingLevel
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4606791922971598901, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: defaultWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: ac642b6f39945a0448c666a7410b5a68,
+      objectReference: {fileID: 11400000, guid: c0e4b8d3d339a0f4bbbd48e70bb143ee,
         type: 2}
     - target: {fileID: 4606791922971598901, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}

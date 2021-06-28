@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Saving;
+using RPG.Stats;
+using RPG.Core;
 
-namespace RPG.Core
+namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField] float health = 100f;
+        [SerializeField] float health;
         private bool isDead = false;
 
-      
+        private void Start()
+        {
+            health = GetComponent<BaseStats>().GetHealth();
+
+        }
 
         public bool IsDead()
         {
