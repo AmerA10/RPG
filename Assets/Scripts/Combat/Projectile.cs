@@ -18,6 +18,7 @@ public class Projectile : MonoBehaviour
 
     Health target = null;
     float damage = 0;
+    [SerializeField] GameObject instigator = null;
     void Start()
     {
         transform.LookAt(GetAimLocation());
@@ -36,10 +37,11 @@ public class Projectile : MonoBehaviour
         
     }
 
-    public void SetTarget(Health target, float damage)
+    public void SetTarget(Health target, GameObject instigator, float damage)
     {
         this.damage = damage;
         this.target = target;
+        this.instigator = instigator;
 
         Destroy(gameObject, maxLifeTime);
     }
@@ -71,7 +73,7 @@ public class Projectile : MonoBehaviour
         {
            GameObject spawnedHitEffect = Instantiate(hitEffect, GetAimLocation(), Quaternion.identity);
         }
-        target.TakeDamage(this.damage);
+        target.TakeDamage(instigator,this.damage);
         speed = 0;
         foreach(GameObject toDestroy in destroyOnHit)
         {

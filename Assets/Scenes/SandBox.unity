@@ -924,6 +924,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9121897855ceaae4ca07d38e4a4707ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &240640229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1383634566998562916, guid: b1bdb93fd78933446a2815987ad82f82,
+    type: 3}
+  m_PrefabInstance: {fileID: 2233753780865093874}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &240640231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240640229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74e342e9b373a4e48a697eee429d60ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 240640232}
+--- !u!114 &240640232 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8212964015350090191, guid: b1bdb93fd78933446a2815987ad82f82,
+    type: 3}
+  m_PrefabInstance: {fileID: 2233753780865093874}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240640229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &257103389
 GameObject:
   m_ObjectHideFlags: 0
@@ -6068,6 +6099,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 767317984500926299, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7.9000244
+      objectReference: {fileID: 0}
     - target: {fileID: 2233753780933344482, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: m_RootOrder
@@ -6189,7 +6225,8 @@ PrefabInstance:
       propertyPath: defaultWeaponName
       value: Sword
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3159778328446178954, guid: b1bdb93fd78933446a2815987ad82f82, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b1bdb93fd78933446a2815987ad82f82, type: 3}
 --- !u!1001 &4477534867672496469
 PrefabInstance:

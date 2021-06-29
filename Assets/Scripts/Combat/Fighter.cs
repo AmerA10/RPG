@@ -38,7 +38,6 @@ namespace RPG.Combat
             if (target == null) return;
             if (target.IsDead())
             {
-                Debug.Log("Target is dead");
                 Cancel();
                 return;
             }
@@ -78,12 +77,12 @@ namespace RPG.Combat
             if (target == null) { return; }
             if (currentWeapon.HasProjectile())
             {
-                currentWeapon.LaunchProjectile(this.rightHandTransform, this.leftHandTransform, target);
+                currentWeapon.LaunchProjectile(this.rightHandTransform, this.leftHandTransform, target, this.gameObject);
             }
             else
             {
                 
-                target.TakeDamage(currentWeapon.GetDamage());
+                target.TakeDamage(gameObject, currentWeapon.GetDamage());
             }
             //probably have to do a null check
             
@@ -125,12 +124,17 @@ namespace RPG.Combat
 
         public void EquipWeapon(Weapon weapon)
         {
-            Debug.Log("changing weapons");
+         
             currentWeapon = weapon; 
             Animator anim = GetComponent<Animator>();
             weapon.Spawn(this.rightHandTransform, this.leftHandTransform, anim);
 
         }
+
+        public Health GetTarget()
+        {
+            return this.target;
+        } 
 
         public object CaptureState()
         {
