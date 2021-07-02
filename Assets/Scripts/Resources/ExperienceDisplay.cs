@@ -3,23 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-namespace RPG.Resources
+namespace RPG.Stats
 {
-    public class HealthDisplay : MonoBehaviour
+    public class ExperienceDisplay : MonoBehaviour
     {
         [SerializeField] TextMeshProUGUI text;
-        Health health;
+        Experience experience;
         private void Awake()
         {
-            health = GameObject.FindWithTag("Player").GetComponent<Health>();
-      
+            experience = GameObject.FindWithTag("Player").GetComponent<Experience>();
         }
 
         private void Update()
         {
             //takes the first thing on the write, and put it in the curley praces and add a % sign
             // the first 0 is the first thing on the right of the comma, the second 0 is the number of decimal places
-            text.text = String.Format("{0:0.0}%" , health.GetPercentage());
+            text.text = experience.GetExperience().ToString();
         }
     }
 

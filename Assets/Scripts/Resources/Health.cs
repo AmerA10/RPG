@@ -17,8 +17,10 @@ namespace RPG.Resources
         private void Start()
         {
             health = GetComponent<BaseStats>().GetStat(Stat.Health);
+           
             maxHealth = health;
 
+           
         }
 
         public bool IsDead()
@@ -44,6 +46,7 @@ namespace RPG.Resources
 
         public float GetPercentage()
         {
+    
             return (health / maxHealth) * 100;
         }
         private void CheckForDeath()
@@ -93,6 +96,7 @@ namespace RPG.Resources
         public void RestoreState(object state)
         {
             this.health = (float)state;
+            Debug.Log("health at load is: " + health);
             CheckForDeath();
         }
 
