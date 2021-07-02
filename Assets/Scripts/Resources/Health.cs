@@ -16,7 +16,7 @@ namespace RPG.Resources
         GameObject instigator;
         private void Start()
         {
-            health = GetComponent<BaseStats>().GetHealth();
+            health = GetComponent<BaseStats>().GetStat(Stat.Health);
             maxHealth = health;
 
         }
@@ -81,7 +81,7 @@ namespace RPG.Resources
             }
             else 
             {
-                experience.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
+                experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
             }
         }
 
