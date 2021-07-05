@@ -22,7 +22,8 @@ namespace RPG.Stats
             {
                 return 0;
             }
-         
+
+            
             return levels[level - 1];
 
             /* foreach (ProgressionCharacterClass progressionClass in characterClasses) {
