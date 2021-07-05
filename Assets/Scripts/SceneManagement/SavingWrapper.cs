@@ -11,7 +11,13 @@ namespace RPG.SceneManagement
         [SerializeField] float fadeInTime;
 
         // Start is called before the first frame update
-        private IEnumerator Start()
+
+        private void Awake()
+        {
+            StartCoroutine(LoadLastScene());
+        }
+
+        private IEnumerator LoadLastScene()
         {
             Fader fader = FindObjectOfType<Fader>();
             fader.FadeOutImmediate();
