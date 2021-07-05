@@ -9,18 +9,19 @@ namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        [SerializeField] float health;
+        float health = -1f;
         private float maxHealth;
         private bool isDead = false;
      
         GameObject instigator;
-        private void Start()
+        private void Awake()
         {
-            health = GetComponent<BaseStats>().GetStat(Stat.Health);
-           
-            maxHealth = health;
-
-           
+            if(health < 0)
+            {
+                health = GetComponent<BaseStats>().GetStat(Stat.Health);
+                maxHealth = health;
+            }
+            
         }
 
         public bool IsDead()
@@ -54,7 +55,7 @@ namespace RPG.Resources
             if (health <= 0)
             {
                 Die();
-                AwardExperience();
+               
 
             }
             else
@@ -67,6 +68,7 @@ namespace RPG.Resources
         {
             if (isDead) return;
             isDead = true;
+            AwardExperience();
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
            
@@ -76,6 +78,10 @@ namespace RPG.Resources
 
         private void AwardExperience()
         {
+            if(instigator == null)
+            {
+                return;
+            }
             Experience experience = instigator.GetComponent<Experience>();
             if (experience == null)
             {
