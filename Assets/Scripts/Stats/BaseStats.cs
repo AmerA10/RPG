@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace RPG.Stats {
     public class BaseStats : MonoBehaviour
@@ -9,7 +10,11 @@ namespace RPG.Stats {
         [SerializeField] int startingLevel = 1;
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
+        [SerializeField] GameObject levelUpParticleEffect = null;
+        [SerializeField] bool shouldUseModifiers = false;
 
+        public event Action onLevelUp;
+       
         int currentLevel = 0;
 
         private void Start()
@@ -30,15 +35,66 @@ namespace RPG.Stats {
             if(newLevel > currentLevel)
             {
                 currentLevel = newLevel;
-                print("Leveled Up");
+                LevelUpEffect();
+                onLevelUp();
+                
             }
+        }
+
+        private void LevelUpEffect()
+        {
+            GameObject levelUp = Instantiate(levelUpParticleEffect, transform);
         }
 
 
 
         public float GetStat(Stat stat)
         {
+            return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1 + (GetPercentageModifier(stat) / 100));
+        }
+
+       
+
+        private float GetBaseStat(Stat stat)
+        {
             return progression.GetStat(stat, characterClass, GetLevel());
+        }
+
+
+        //this will allow each class to return its own modifier depending on the stat passed in
+        private float GetAdditiveModifier(Stat stat)
+        {
+            if(!shouldUseModifiers)
+            {
+                return 0;
+            }
+            float sum = 0;
+            IModifierProvider[] modifierProviders = GetComponents<IModifierProvider>();
+            foreach (IModifierProvider modifier in modifierProviders)
+            {
+                foreach(float modifiers in modifier.GetAdditiveModifiers(stat))
+                {
+                    sum += modifiers;
+                }
+            }
+            return sum;
+        }
+        private float GetPercentageModifier(Stat stat)
+        {
+            if (!shouldUseModifiers)
+            {
+                return 0;
+            }
+            float sumPercentage = 0;
+            IModifierProvider[] modifierProviders = GetComponents<IModifierProvider>();
+            foreach (IModifierProvider modifer in modifierProviders)
+            {
+                foreach (float percentage in modifer.GetPercentageModifiers(stat))
+                {
+                    sumPercentage += percentage;
+                }
+            }
+            return sumPercentage;
         }
 
         public int GetLevel()

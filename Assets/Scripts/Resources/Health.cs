@@ -12,15 +12,19 @@ namespace RPG.Resources
         float health = -1f;
         private float maxHealth;
         private bool isDead = false;
-     
+
+        [SerializeField] float regenerationPercentage = 70f;
+
         GameObject instigator;
         private void Awake()
         {
-            if(health < 0)
+            GetComponent<BaseStats>().onLevelUp += LevelUpHealthUpdate;
+            if (health < 0)
             {
                 health = GetComponent<BaseStats>().GetStat(Stat.Health);
                 maxHealth = health;
             }
+           
             
         }
 
@@ -29,11 +33,19 @@ namespace RPG.Resources
             return this.isDead;
         }
 
+        private void LevelUpHealthUpdate()
+        {
+            float currentPercentage = GetPercentage();
+            this.maxHealth = GetComponent<BaseStats>().GetStat(Stat.Health);
+            this.health = (Mathf.Max(currentPercentage, regenerationPercentage) / 100) * maxHealth;
+      
+        }
+        
        
 
         public void TakeDamage(GameObject instigator, float damage)
         {
-           
+            Debug.Log(this.gameObject.name + " Took damage: " + damage);
             health = Mathf.Max(health - damage, 0); //if the health goes below zero then the health is zero 
             this.instigator = instigator;
             CheckForDeath();
@@ -43,6 +55,10 @@ namespace RPG.Resources
         public float GetHealth()
         {
             return this.health;
+        }
+        public float GetMaxHealth()
+        {
+            return this.maxHealth;
         }
 
         public float GetPercentage()

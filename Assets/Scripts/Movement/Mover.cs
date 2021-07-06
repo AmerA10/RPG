@@ -14,10 +14,15 @@ namespace RPG.Movement
         Health health;
 
         [SerializeField] float maxSpeed = 6;
-        void Start()
+
+        private void Awake()
         {
             health = GetComponent<Health>();
             nav = GetComponent<NavMeshAgent>();
+        }
+        void Start()
+        {
+          
         }
 
         // Update is called once per frame
@@ -68,9 +73,10 @@ namespace RPG.Movement
             //probably should reset targets
             //cancel current actions
             this.GetComponent<NavMeshAgent>().enabled = false; //this simple just avoids some issues with the nav mesh agent
+            transform.position = position.getVector();
             this.GetComponent<NavMeshAgent>().enabled = true;
             this.GetComponent<ActionScheduler>().CancelCurrentAction();
-            transform.position = position.getVector(); 
+            
         }
     }
 

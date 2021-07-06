@@ -8,6 +8,7 @@ namespace RPG.Combat
         [SerializeField] AnimatorOverrideController animatorOverride = null;
         [SerializeField] GameObject equippedPrefab = null;
         [SerializeField] float weaponDamage = 5f;
+        [SerializeField] float weaponPercentageBonus = 0f;
         [SerializeField] float weaponRange = 2f;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
@@ -32,11 +33,11 @@ namespace RPG.Combat
             {
                 animator.runtimeAnimatorController = animatorOverride;
             }
-            //if the weapon picked up doeos not contain an animatorOverride and the one picked 
+            /*if the weapon picked up doeos not contain an animatorOverride and the one picked 
             //and the current player animator runTimeAnimatorController is an overrideController then 
             //the animator runtimeAnimatorController should be the root of the overrideController, which then would be the default
             //we dont want the animator to use ethe previous override controller, so
-            //if the player previous animator is an override, and the current override is null then revert to the root animator
+            if the player previous animator is an override, and the current override is null then revert to the root animator */
             else if (overrideController != null)
                 
             {
@@ -82,16 +83,22 @@ namespace RPG.Combat
             return projectile != null;
         }
 
-        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator)
+        public void LaunchProjectile(Transform rightHand, Transform leftHand, Health target, GameObject instigator, float calculatedDamage)
         {
             Projectile projectileInstance = Instantiate(projectile, GetHandTransform(rightHand, leftHand).position, Quaternion.identity);
-            projectileInstance.SetTarget(target, instigator ,this.weaponDamage);
+            projectileInstance.SetTarget(target, instigator , calculatedDamage);
         }
 
         public float GetDamage()
         {
             return weaponDamage;
         }
+
+        public float GetPercentageBonus()
+        {
+            return weaponPercentageBonus;
+        }
+
         public float GetRange()
         {
             return weaponRange;

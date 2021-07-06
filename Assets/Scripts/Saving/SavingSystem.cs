@@ -20,16 +20,17 @@ namespace RPG.Saving
         {
             // 1. Get the state 2. Load the last scene 3. Restore the state of that scene
             Dictionary<string, object> state = LoadFile(saveFile);
+            int lastSceneIndex = SceneManager.GetActiveScene().buildIndex;
             if(state.ContainsKey("LastSceneBuildIndex"))
             {
                 if (state["LastSceneBuildIndex"] != null)
                 {
-                    int lastSceneIndex = (int)state["LastSceneBuildIndex"];
+                    lastSceneIndex = (int)state["LastSceneBuildIndex"];
                     if (lastSceneIndex != SceneManager.GetActiveScene().buildIndex)
                     {
-                        yield return SceneManager.LoadSceneAsync(lastSceneIndex);
+                        
                     }
-
+                    yield return SceneManager.LoadSceneAsync(lastSceneIndex);
                     RestoreState(state);
                 }
             }
