@@ -20,11 +20,7 @@ namespace RPG.Movement
             health = GetComponent<Health>();
             nav = GetComponent<NavMeshAgent>();
         }
-        void Start()
-        {
-          
-        }
-
+     
         // Update is called once per frame
         void Update()
         {

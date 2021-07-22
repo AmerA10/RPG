@@ -23,16 +23,11 @@ namespace RPG.Saving
             int lastSceneIndex = SceneManager.GetActiveScene().buildIndex;
             if(state.ContainsKey("LastSceneBuildIndex"))
             {
-                if (state["LastSceneBuildIndex"] != null)
-                {
-                    lastSceneIndex = (int)state["LastSceneBuildIndex"];
-                    if (lastSceneIndex != SceneManager.GetActiveScene().buildIndex)
-                    {
-                        
-                    }
+               
+                    lastSceneIndex = (int)state["LastSceneBuildIndex"];   
                     yield return SceneManager.LoadSceneAsync(lastSceneIndex);
                     RestoreState(state);
-                }
+
             }
             
             

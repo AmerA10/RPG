@@ -6,6 +6,7 @@ using RPG.Core;
 using RPG.Movement;
 using RPG.Resources;
 using System;
+using GameDevTV.Utils;
 
 namespace RPG.Control
 {
@@ -25,19 +26,25 @@ namespace RPG.Control
         Fighter fighter;
         Health health;
         Mover mover;
-        Vector3 gaurdPosition;
+        LazyValue<Vector3> gaurdPosition;
         float timeSinceLastSawPlayer = Mathf.Infinity; //never seen the player basically
         int currentWaypointIndex = 0;
         float timeSinceLastWayPoint = Mathf.Infinity;
-        
 
-        void Start()
+        private void Awake()
         {
             player = GameObject.FindWithTag("Player");
             fighter = GetComponent<Fighter>();
             health = GetComponent<Health>();
             mover = GetComponent<Mover>();
-            gaurdPosition = transform.position;
+            gaurdPosition = new LazyValue<Vector3>(GetTransformPosition);
+
+        }
+
+        void Start()
+        {
+
+            gaurdPosition.ForceInit();
 
         }
         // Update is called once per frame
@@ -66,6 +73,10 @@ namespace RPG.Control
             UpdateTimers();
         }
 
+        private Vector3 GetTransformPosition()
+        {
+            return transform.position;
+        }
         private void UpdateTimers()
         {
             timeSinceLastSawPlayer += Time.deltaTime;
@@ -75,7 +86,7 @@ namespace RPG.Control
         private void PatrolBehaviour()
         {
 
-            Vector3 nexPositioon = gaurdPosition;
+            Vector3 nexPositioon = gaurdPosition.value;
             
             if (patrolPath != null)
             {

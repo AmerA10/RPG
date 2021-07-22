@@ -4,13 +4,14 @@ using UnityEngine;
 using RPG.Saving;
 using RPG.Stats;
 using RPG.Core;
+using GameDevTV.Utils;
 
 namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
     {
-        float health = -1f;
-        private float maxHealth;
+        LazyValue<float> health ;
+        LazyValue<float> maxHealth;
         private bool isDead = false;
 
         [SerializeField] float regenerationPercentage = 70f;
@@ -18,15 +19,35 @@ namespace RPG.Resources
         GameObject instigator;
         private void Awake()
         {
-            GetComponent<BaseStats>().onLevelUp += LevelUpHealthUpdate;
-            if (health < 0)
-            {
-                health = GetComponent<BaseStats>().GetStat(Stat.Health);
-                maxHealth = health;
-            }
-           
-            
+            //uses the lazyvalue class as a wrapper the value
+            //Insures initialization is called before first use
+            health = new LazyValue<float>(GetInitialHealth);
+            maxHealth = new LazyValue<float>(GetMaxHealth);
+
+
         }
+
+        private void Start()
+        {
+            //A method that forces initialization of the lazyValue
+            health.ForceInit();
+        }
+
+        private float GetInitialHealth()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health); 
+        }
+
+        private void OnEnable()
+        {
+            GetComponent<BaseStats>().onLevelUp += LevelUpHealthUpdate;
+        }
+
+        private void OnDisable()
+        {
+            GetComponent<BaseStats>().onLevelUp -= LevelUpHealthUpdate;
+        }
+
 
         public bool IsDead()
         {
@@ -36,8 +57,8 @@ namespace RPG.Resources
         private void LevelUpHealthUpdate()
         {
             float currentPercentage = GetPercentage();
-            this.maxHealth = GetComponent<BaseStats>().GetStat(Stat.Health);
-            this.health = (Mathf.Max(currentPercentage, regenerationPercentage) / 100) * maxHealth;
+            this.maxHealth.value = GetComponent<BaseStats>().GetStat(Stat.Health);
+            this.health.value = (Mathf.Max(currentPercentage, regenerationPercentage) / 100) * maxHealth.value;
       
         }
         
@@ -46,7 +67,7 @@ namespace RPG.Resources
         public void TakeDamage(GameObject instigator, float damage)
         {
             Debug.Log(this.gameObject.name + " Took damage: " + damage);
-            health = Mathf.Max(health - damage, 0); //if the health goes below zero then the health is zero 
+            health.value = Mathf.Max(health.value - damage, 0); //if the health goes below zero then the health is zero 
             this.instigator = instigator;
             CheckForDeath();
             
@@ -54,21 +75,22 @@ namespace RPG.Resources
 
         public float GetHealth()
         {
-            return this.health;
+            return this.health.value;
         }
         public float GetMaxHealth()
         {
-            return this.maxHealth;
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
+          
         }
 
         public float GetPercentage()
         {
     
-            return (health / maxHealth) * 100;
+            return (health.value / maxHealth.value) * 100;
         }
         private void CheckForDeath()
         {
-            if (health <= 0)
+            if (health.value <= 0)
             {
                 Die();
                
@@ -87,9 +109,7 @@ namespace RPG.Resources
             AwardExperience();
             GetComponent<Animator>().SetTrigger("die");
             GetComponent<ActionScheduler>().CancelCurrentAction();
-           
-
-            
+   
         }
 
         private void AwardExperience()
@@ -112,12 +132,12 @@ namespace RPG.Resources
 
         public object CaptureState()
         {
-            return this.health;
+            return this.health.value;
         }
 
         public void RestoreState(object state)
         {
-            this.health = (float)state;
+            this.health.value = (float)state;
             Debug.Log("health at load is: " + health);
             CheckForDeath();
         }
