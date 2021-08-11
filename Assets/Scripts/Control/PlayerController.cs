@@ -4,10 +4,31 @@ using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
 using RPG.Resources;
+using System;
+using UnityEngine.EventSystems;
 
 namespace RPG.Control {
     public class PlayerController : MonoBehaviour
     {
+
+        enum CursorType
+        {
+            None,
+            Movement,
+            Combat,
+            UI
+
+        }
+        [System.Serializable]
+        struct CursorMapping
+        {
+            public CursorType cursorType;
+            public Texture2D cursorTexture;
+            public Vector2 hotSpot;
+        }
+
+        
+        [SerializeField] CursorMapping[] cursorMapping = null;
 
         Health health;
 
@@ -17,13 +38,27 @@ namespace RPG.Control {
         }
         void Update()
         {
+            if (InteractWithUI()) return;
             if(health.IsDead())
             {
+                SetCursor(CursorType.None);
                 return;
             }
             if (InteractWithCombat()) return; //if we dont hit an enemy then just move on to the next method
             if(InteractWithMovement()) return;
+            SetCursor(CursorType.None);
         
+        }
+
+        private bool InteractWithUI()
+        {
+            //returns weather or not the cursor over a UI gameobject
+            if(EventSystem.current.IsPointerOverGameObject())
+            {
+                SetCursor(CursorType.UI);
+                return true;
+            }
+            return false;
         }
 
         private bool InteractWithCombat()
@@ -45,11 +80,14 @@ namespace RPG.Control {
                  GetComponent<Fighter>().Attack(target.gameObject);
 
                 }
+                SetCursor(CursorType.Combat);
                 return true; //even if we are hovering its still true
 
             }
             return false;
         }
+
+       
 
         private bool InteractWithMovement()
         {
@@ -61,9 +99,32 @@ namespace RPG.Control {
                 {
                     GetComponent<Mover>().StartMoveAction(hit.point, 1f);
                 }
+                SetCursor(CursorType.Movement);
                 return true;
             }
             return false;
+        }
+
+
+        private void SetCursor(CursorType type)
+        {
+
+            CursorMapping mapping = GetCursorMapping(type);
+           Cursor.SetCursor(mapping.cursorTexture, mapping.hotSpot,CursorMode.Auto);
+        }
+
+        private CursorMapping GetCursorMapping(CursorType type)
+        {
+            foreach(CursorMapping cursorMap in cursorMapping)
+            {
+                if(cursorMap.cursorType == type)
+                {
+                    return cursorMap;
+                }
+                
+            }
+            return cursorMapping[0];
+            
         }
 
         private static Ray GetMouseRay()

@@ -26,6 +26,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2ad4da0d4365d04eb898a334fe019ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cursorMapping:
+  - cursorType: 1
+    cursorTexture: {fileID: 2800000, guid: 8ea795c067613354898068091ffc7130, type: 3}
+    hotSpot: {x: 0, y: 0}
+  - cursorType: 2
+    cursorTexture: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
+    hotSpot: {x: 0, y: 0}
+  - cursorType: 0
+    cursorTexture: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
+    hotSpot: {x: 0, y: 0}
+  - cursorType: 3
+    cursorTexture: {fileID: 2800000, guid: 8859fce41c5d0a148ad0b7eebfca7fe9, type: 3}
+    hotSpot: {x: 0, y: 0}
 --- !u!114 &6449169499486663037
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -83,8 +83,6 @@ namespace RPG.Stats
             public CharacterClass characterClass;
             public ProgressionStat[] stats;
             
-
-
         }
         [System.Serializable]
         class ProgressionStat

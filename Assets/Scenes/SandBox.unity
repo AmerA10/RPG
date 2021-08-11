@@ -6117,12 +6117,12 @@ PrefabInstance:
     - target: {fileID: 730434452679393469, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 9.399994
+      value: 9.400024
       objectReference: {fileID: 0}
     - target: {fileID: 730434452679393469, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -112.75399
+      value: -112.754
       objectReference: {fileID: 0}
     - target: {fileID: 767317984500926299, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
@@ -6137,12 +6137,12 @@ PrefabInstance:
     - target: {fileID: 1184027420899969553, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 9.4
+      value: 9.400024
       objectReference: {fileID: 0}
     - target: {fileID: 1184027420899969553, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -43.6
+      value: -43.600006
       objectReference: {fileID: 0}
     - target: {fileID: 1638665505468991320, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
@@ -6325,6 +6325,41 @@ PrefabInstance:
       propertyPath: defaultWeaponName
       value: Sword
       objectReference: {fileID: 0}
+    - target: {fileID: 5424669365220561298, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 9.400024
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957311871258568434, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: cursorMapping.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957311871258568434, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: cursorMapping.Array.data[0].cursorType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957311871258568434, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: cursorMapping.Array.data[1].cursorType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957311871258568434, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: cursorMapping.Array.data[0].cursorTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 8ea795c067613354898068091ffc7130, type: 3}
+    - target: {fileID: 5957311871258568434, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: cursorMapping.Array.data[1].cursorTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 2d18e23e3ce249b4489b8bcdd02d3f48, type: 3}
+    - target: {fileID: 5957311871258568434, guid: b1bdb93fd78933446a2815987ad82f82,
+        type: 3}
+      propertyPath: cursorMapping.Array.data[2].cursorTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: 2e71a8202d3b4a3448ec85ced5a40265, type: 3}
     - target: {fileID: 8212964015350090191, guid: b1bdb93fd78933446a2815987ad82f82,
         type: 3}
       propertyPath: m_margin.w
