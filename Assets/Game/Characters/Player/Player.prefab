@@ -39,6 +39,9 @@ MonoBehaviour:
   - cursorType: 3
     cursorTexture: {fileID: 2800000, guid: 8859fce41c5d0a148ad0b7eebfca7fe9, type: 3}
     hotSpot: {x: 0, y: 0}
+  - cursorType: 4
+    cursorTexture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
+    hotSpot: {x: 0, y: 0}
 --- !u!114 &6449169499486663037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +186,7 @@ PrefabInstance:
         type: 3}
       propertyPath: defaultWeapon
       value: 
-      objectReference: {fileID: 11400000, guid: 08b9042bb12c997448580f9e247f0678,
+      objectReference: {fileID: 11400000, guid: c0e4b8d3d339a0f4bbbd48e70bb143ee,
         type: 2}
     - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
@@ -196,6 +199,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 01ab58ea0f17a37478501ef673741d2c,
         type: 2}
+    - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: defaultWeaponName
+      value: Sword
+      objectReference: {fileID: 0}
     - target: {fileID: 4514233828876162510, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: leftHandTransform

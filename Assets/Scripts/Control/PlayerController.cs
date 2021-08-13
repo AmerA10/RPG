@@ -11,14 +11,7 @@ namespace RPG.Control {
     public class PlayerController : MonoBehaviour
     {
 
-        enum CursorType
-        {
-            None,
-            Movement,
-            Combat,
-            UI
-
-        }
+       
         [System.Serializable]
         struct CursorMapping
         {
@@ -38,16 +31,56 @@ namespace RPG.Control {
         }
         void Update()
         {
+            if (InteractWithComponent()) return;
             if (InteractWithUI()) return;
             if(health.IsDead())
             {
                 SetCursor(CursorType.None);
                 return;
-            }
-            if (InteractWithCombat()) return; //if we dont hit an enemy then just move on to the next method
+            } //if we dont hit an enemy then just move on to the next method
             if(InteractWithMovement()) return;
             SetCursor(CursorType.None);
         
+        }
+
+        private bool InteractWithComponent()
+        {
+            RaycastHit[] hits = RaycastAllSorted(); //gives back a list of hits of everything that the ray hit
+            foreach (RaycastHit hit in hits)
+            {
+               IRaycastable[] rayCastables =  hit.transform.GetComponents<IRaycastable>();
+               foreach(IRaycastable raycastable in rayCastables)
+                {
+                    if(raycastable.HandleRaycast(this))
+                    {
+                        Debug.Log("Mouse hitting: " + raycastable);
+                        SetCursor(raycastable.GetCursorType());
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        RaycastHit[] RaycastAllSorted()
+        {
+            //Get All hits
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            
+     
+            //Sort BY distance
+            //Build array distances
+            float[] distances = new float[hits.Length];
+
+            //Sort the hits
+            Array.Sort(distances, hits);
+            for(int i = 0; i < distances.Length; i++)
+            {
+                distances[i] = hits[i].distance;
+            }
+
+            //Return
+            return hits;
         }
 
         private bool InteractWithUI()
@@ -61,31 +94,6 @@ namespace RPG.Control {
             return false;
         }
 
-        private bool InteractWithCombat()
-        {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay()); //gives back a list of hits of everything that the ray hit
-            foreach(RaycastHit hit in hits)
-            {
-                CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null) continue;
-                
-                if (!GetComponent<Fighter>().CanAttack(target.gameObject))
-                {
-                    continue;
-                }
-
-                if(Input.GetMouseButton(0))
-                {   
-
-                 GetComponent<Fighter>().Attack(target.gameObject);
-
-                }
-                SetCursor(CursorType.Combat);
-                return true; //even if we are hovering its still true
-
-            }
-            return false;
-        }
 
        
 

@@ -26,27 +26,6 @@ namespace RPG.Stats
             
             return levels[level - 1];
 
-            /* foreach (ProgressionCharacterClass progressionClass in characterClasses) {
-
-                 if(progressionClass.characterClass != characterClass)
-                 {
-                     continue;
-                 }
-                 foreach(ProgressionStat characterStat in progressionClass.stats)
-                 {
-                     if(characterStat.stat != stat)
-                     {
-                         continue;
-                     }
-                     if(characterStat.levels.Length < level)
-                     {
-                         continue;
-                     }
-                     return characterStat.levels[level - 1];
-                 }
-             }
-
-             return 0;*/
         }
 
         public int GetLevels(Stat stat, CharacterClass characterClass)
