@@ -6,6 +6,7 @@ using RPG.Combat;
 using RPG.Resources;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.AI;
 
 namespace RPG.Control {
     public class PlayerController : MonoBehaviour
@@ -22,6 +23,9 @@ namespace RPG.Control {
 
         
         [SerializeField] CursorMapping[] cursorMapping = null;
+
+
+        [SerializeField] float maxNavMeshProjectionDistance = 1f;
 
         Health health;
 
@@ -99,13 +103,14 @@ namespace RPG.Control {
 
         private bool InteractWithMovement()
         {
-            RaycastHit hit;
-            bool hasHit = Physics.Raycast(GetMouseRay(), out hit); //takes the ray and hit and stores info into the hit, the method is a bool return type
+     
+            Vector3 target;
+            bool hasHit = RaycastNavMesh(out target);//takes the ray and hit and stores info into the hit, the method is a bool return type
             if (hasHit)
             {
                 if(Input.GetMouseButton(0))
                 {
-                    GetComponent<Mover>().StartMoveAction(hit.point, 1f);
+                    GetComponent<Mover>().StartMoveAction(target, 1f);
                 }
                 SetCursor(CursorType.Movement);
                 return true;
@@ -113,6 +118,35 @@ namespace RPG.Control {
             return false;
         }
 
+        private bool RaycastNavMesh(out Vector3 target)
+        {
+            target = Vector3.zero;
+            //RayCast to terrain
+            RaycastHit hit;
+            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
+            if(!hasHit)
+            {
+                return false;
+            }
+
+            
+            NavMeshHit navHit;
+
+            //find nearest navmesh point
+            bool hasNavHit = NavMesh.SamplePosition(hit.point, out navHit, maxNavMeshProjectionDistance, NavMesh.AllAreas);
+            if(!hasNavHit)
+            {
+                //no point around navmesh found
+                return false;
+            }
+            target = navHit.position;
+            //return true if found
+
+            return true;
+
+
+
+        }
 
         private void SetCursor(CursorType type)
         {
