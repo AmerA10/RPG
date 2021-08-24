@@ -26,6 +26,7 @@ namespace RPG.Control {
 
 
         [SerializeField] float maxNavMeshProjectionDistance = 1f;
+        [SerializeField] float maxNavPathLength = 40f;
 
         Health health;
 
@@ -140,12 +141,46 @@ namespace RPG.Control {
                 return false;
             }
             target = navHit.position;
+
+            NavMeshPath path = new NavMeshPath();
+            //calculate the path between the player and the clicked position
+            bool hasPath = NavMesh.CalculatePath(transform.position, target, NavMesh.AllAreas, path);
+            if(!hasPath)
+            {
+                //basically no path can be calculated to that place
+                return false;
+            }
+            if (path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+        
+            if(GetPathLength(path) > maxNavPathLength)
+            {
+                return false;
+            }
             //return true if found
 
             return true;
 
 
 
+        }
+
+        private float GetPathLength(NavMeshPath path)
+        {
+            Vector3[] corners = path.corners;
+            float totalLength = 0;
+            if(path.corners.Length < 2)
+            {
+                return 0;
+            }
+            for(int i = 0; i < path.corners.Length - 1; i++)
+            {
+                totalLength += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+            }
+            Debug.Log("Total Distance: " + totalLength);
+            return 0f;
         }
 
         private void SetCursor(CursorType type)
