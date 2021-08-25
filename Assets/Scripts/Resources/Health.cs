@@ -5,7 +5,7 @@ using RPG.Saving;
 using RPG.Stats;
 using RPG.Core;
 using GameDevTV.Utils;
-
+using UnityEngine.Events;
 namespace RPG.Resources
 {
     public class Health : MonoBehaviour, ISaveable
@@ -15,6 +15,12 @@ namespace RPG.Resources
         private bool isDead = false;
 
         [SerializeField] float regenerationPercentage = 70f;
+        [SerializeField] TakeDamageEvent takeDamage;
+
+        [System.Serializable]
+        public class TakeDamageEvent : UnityEvent<float>
+        {
+        }
 
         GameObject instigator;
         private void Awake()
@@ -69,7 +75,10 @@ namespace RPG.Resources
             Debug.Log(this.gameObject.name + " Took damage: " + damage);
             health.value = Mathf.Max(health.value - damage, 0); //if the health goes below zero then the health is zero 
             this.instigator = instigator;
+            takeDamage.Invoke(damage);
+            
             CheckForDeath();
+           
             
         }
 

@@ -42,6 +42,8 @@ MonoBehaviour:
   - cursorType: 4
     cursorTexture: {fileID: 2800000, guid: f8c873f1e53e83f4aabf342d6be1dfc3, type: 3}
     hotSpot: {x: 0, y: 0}
+  maxNavMeshProjectionDistance: 1
+  maxNavPathLength: 40
 --- !u!114 &6449169499486663037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,6 +285,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6013480228655823036, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9824e7cf46a46d4ead682980e02164a, type: 3}
