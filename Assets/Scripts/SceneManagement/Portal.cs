@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using RPG.Control;
 using UnityEngine.AI;
 using RPG.Saving;
-
+using RPG.Core;
 namespace RPG.SceneManagement
 {
 
@@ -29,12 +29,13 @@ namespace RPG.SceneManagement
         [SerializeField] float fadeInTime = 1f;
         [SerializeField] float waitTime = 2f;
 
-     
+        GameObject player;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.transform.tag.Equals("Player"))
             {
+               
                 StartCoroutine(Transition());
                
             }
@@ -50,6 +51,9 @@ namespace RPG.SceneManagement
             }
             Fader fader = FindObjectOfType<Fader>();
             SavingWrapper saver = FindObjectOfType<SavingWrapper>();
+            //Remove Control
+            PlayerController playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            playerController.enabled = false;
 
             DontDestroyOnLoad(gameObject); //works only on root of scene, not child of another game object
 
@@ -59,11 +63,12 @@ namespace RPG.SceneManagement
             saver.Save();
 
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+
+            //Remove Control form player as well
+            PlayerController newPlayerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            newPlayerController.enabled = false;
+
             saver.Load();
-            
-     
-
-
 
             //get hold of the other portal in the loaded level
             Portal otherPortal = GetOtherPortal();
@@ -72,7 +77,11 @@ namespace RPG.SceneManagement
             saver.Save();
             yield return new WaitForSeconds(waitTime); // wait for things to stablized
             
-            yield return fader.FadeIn(fadeInTime);
+            //dont wait for the coroutine instead just have it run the background
+            fader.FadeIn(fadeInTime);
+
+            //Restore Control to player
+            newPlayerController.enabled = true;
 
             Destroy(gameObject); //destry gameobject after scene is loaded
         }
@@ -107,6 +116,8 @@ namespace RPG.SceneManagement
             player.GetComponent<NavMeshAgent>().enabled = true;
 
         }
+
+       
     }
 
 }

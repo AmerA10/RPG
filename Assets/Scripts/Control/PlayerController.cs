@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RPG.Movement;
 using RPG.Combat;
-using RPG.Resources;
+using RPG.Attributes;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.AI;
@@ -58,7 +58,7 @@ namespace RPG.Control {
                 {
                     if(raycastable.HandleRaycast(this))
                     {
-                        Debug.Log("Mouse hitting: " + raycastable);
+                     
                         SetCursor(raycastable.GetCursorType());
                         return true;
                     }
@@ -179,7 +179,7 @@ namespace RPG.Control {
             {
                 totalLength += Vector3.Distance(path.corners[i], path.corners[i + 1]);
             }
-            Debug.Log("Total Distance: " + totalLength);
+
             return 0f;
         }
 

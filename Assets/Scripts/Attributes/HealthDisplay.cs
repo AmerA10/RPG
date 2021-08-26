@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
-namespace RPG.Resources
+namespace RPG.Attributes
 {
     public class HealthDisplay : MonoBehaviour
     {

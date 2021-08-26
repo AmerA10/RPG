@@ -7,6 +7,7 @@ namespace RPG.SceneManagement
     public class Fader : MonoBehaviour
     {
         CanvasGroup canvasGroup;
+        Coroutine currentActiveFade = null;
         void Awake()
         {
             canvasGroup = GetComponent<CanvasGroup>();
@@ -20,33 +21,47 @@ namespace RPG.SceneManagement
       public IEnumerator FadeOutIn()
         {
             yield return FadeOut(3f);
-            Debug.Log("FadedOut");
+            
             yield return FadeIn(1f);
-            Debug.Log("FadedIn");
+            
         }
 
-       public IEnumerator FadeOut(float time)
+       public Coroutine FadeOut(float time)
+       {
+           return Fade(1, time);     
+       }
+
+       public Coroutine FadeIn(float time)
+       {
+           return Fade(0, time);
+       }
+
+        //checks for active fades and cancels them if they exists
+        //then calls the FadeRoutine to do the fade
+        public Coroutine Fade(float target, float time)
         {
-            //do this only for a limited amount of time
-            while (canvasGroup.alpha < 1) //alpha is not 1, update it until it is 
+            //Cancel running coroutines
+            if (currentActiveFade != null)
             {
-                canvasGroup.alpha += Time.deltaTime / time;
+                StopCoroutine(currentActiveFade);
+            }
+            currentActiveFade = StartCoroutine(FadeRoutine(target, time));
+             return currentActiveFade;
+        }
+
+        private IEnumerator FadeRoutine(float target, float time)
+        {
+            while (!Mathf.Approximately(canvasGroup.alpha,  target)) //alpha is not 1, update it until it is 
+            {
+                canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, target, Time.deltaTime / time);
                 yield return null; //null = 1 frame;
                 //moveAlpha until it is 1 by the frame and time
             }
+        }
+
+
       
-        }
-       public IEnumerator FadeIn(float time)
-        {
-            //do this only for a limited amount of time
-            while (canvasGroup.alpha > 0) //alpha is not 1, update it until it is 
-            {
-                canvasGroup.alpha -= Time.deltaTime / time;
-                yield return null; //null = 1 frame;
-                //moveAlpha until it is 1 by the frame and time
-            }
-       
-        }
+
         // Start is called before the first frame update
     }
 }
