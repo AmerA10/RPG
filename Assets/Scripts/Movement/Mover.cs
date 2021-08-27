@@ -14,6 +14,7 @@ namespace RPG.Movement
         Health health;
 
         [SerializeField] float maxSpeed = 6;
+        [SerializeField] float maxNavPathLength = 40f;
 
         private void Awake()
         {
@@ -32,6 +33,43 @@ namespace RPG.Movement
         {
             GetComponent<ActionScheduler>().StartAction(this);
             MoveTo(destination, speedFraction);
+        }
+
+        public bool CanMoveTo(Vector3 destination)
+        {
+            NavMeshPath path = new NavMeshPath();
+            //calculate the path between the player and the clicked position
+            bool hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);
+            if (!hasPath)
+            {
+                //basically no path can be calculated to that place
+                return false;
+            }
+            if (path.status != NavMeshPathStatus.PathComplete)
+            {
+                return false;
+            }
+
+            if (GetPathLength(path) > maxNavPathLength)
+            {
+                return false;
+            }
+            return true;
+        }
+        private float GetPathLength(NavMeshPath path)
+        {
+            Vector3[] corners = path.corners;
+            float totalLength = 0;
+            if (path.corners.Length < 2)
+            {
+                return 0;
+            }
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                totalLength += Vector3.Distance(path.corners[i], path.corners[i + 1]);
+            }
+
+            return 0f;
         }
 
         public void MoveTo(Vector3 destination, float speedFraction)

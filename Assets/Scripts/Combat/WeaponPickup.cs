@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RPG.Control;
-
+using RPG.Attributes;
 namespace RPG.Combat
 {
     public class WeaponPickup : MonoBehaviour, IRaycastable
     {
         // Start is called before the first frame update
 
-        [SerializeField] Weapon weapon = null;
+        [SerializeField] WeaponConfig weapon = null;
+        [SerializeField] float healthToRestore = 0f;
         [SerializeField] float respawnTime = 5f;
 
  
@@ -18,14 +19,22 @@ namespace RPG.Combat
         {
             if(other.CompareTag("Player"))
             {
-                Pickup(other.GetComponent<Fighter>());
+                Pickup(other.gameObject);
             }
         }
 
-        private void Pickup(Fighter fighter)
+        private void Pickup(GameObject subject)
         {
             Debug.Log("picking up weapon");
-            fighter.EquipWeapon(weapon);
+            if (weapon != null)
+            {
+                subject.GetComponent<Fighter>().EquipWeapon(weapon);
+            }
+            if(healthToRestore > 0)
+            {
+                subject.GetComponent<Health>().Heal(healthToRestore);
+            }
+            
             StartCoroutine(HideForSeconds(respawnTime));
         }
 
@@ -50,7 +59,7 @@ namespace RPG.Combat
         {
             if(Input.GetMouseButton(0))
             {
-                Pickup(callingController.GetComponent<Fighter>());
+                Pickup(callingController.gameObject);
             }
             return true;
         }

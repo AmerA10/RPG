@@ -313,12 +313,47 @@ PrefabInstance:
     - target: {fileID: 6013480228655823036, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
         type: 3}
       propertyPath: health
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 2170789855460591548}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Aggrevate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: RPG.Control.AIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8522565226876538685, guid: d9824e7cf46a46d4ead682980e02164a,
+        type: 3}
+      propertyPath: takeDamage.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6030949366813787737, guid: d9824e7cf46a46d4ead682980e02164a, type: 3}
